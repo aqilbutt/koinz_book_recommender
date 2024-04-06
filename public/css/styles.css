@@ -1,0 +1,52 @@
+.form-group {
+    margin-bottom: 10px;
+}
+
+.common-style {
+    margin-top: 20px;
+}
+
+select {
+    width: 50%;
+    padding: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.Submmit {
+    padding: 10px 20px;
+    margin-top: 15px;
+    background-color: #98caff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Submmit:hover {
+    background-color: #86f023;
+}
+
+.left-view{
+    padding-left: 10px;
+    float: left;
+    width: 50%;
+}
+
+.right-view{
+    padding-left: 15px;
+    float: right;
+    width: 50%;
+}
+
+.left-view {
+    border-right: 1px solid #ccc;
+}
+
+.right-view {
+    border-left: 1px solid #ccc;
+}
+
+.main-container{
+    display: flex;
+}
