@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Interval Form</title>
+    <title>Main View</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
     <div class="main-container">
-
         <div class='left-view'>
             <!-- Submission Form -->
             <form id="interval-form">
@@ -54,6 +53,7 @@
     </div>
 
     <script>
+        // Script to add multiple intervals
         document.getElementById('interval-form').addEventListener('click', function(event) {
             if (event.target && event.target.classList.contains('add-interval')) {
                 const container = document.getElementById('intervals-container');
