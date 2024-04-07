@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Interval\ShowController;
+use App\Http\Controllers\KBR\MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,5 +13,6 @@ use App\Http\Controllers\Interval\ShowController;
 |
 */
 
-Route::get('/', [ShowController::class, 'index']);
-Route::get('/interval', [ShowController::class, 'index']);
+Route::get('/', [MainController::class, 'redirectToDefault']);
+Route::get('/kbr', [MainController::class, 'index'])->name('kbr.index');
+Route::post('/kbr', [MainController::class, 'store'])->name('kbr.store');
