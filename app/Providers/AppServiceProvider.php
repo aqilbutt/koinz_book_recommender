@@ -14,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if (env('SMS_PROVIDER') == 'provider1') {
+            $this->app->register(SmsProvider1::class);
+        } else {
+            $this->app->register(SmsProvider2::class);
+        }
     }
 
     /**

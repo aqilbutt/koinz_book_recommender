@@ -7,6 +7,7 @@ use App\Helper\RecommendedBooksHelper\RecommendedBooksHelper;
 use App\Helper\BooksHelper\BooksHelper;
 use App\Helper\UserHelper\UserHelper;
 use Illuminate\Http\Request;
+use App\Facades\SMSFacade;
 
 /**
  * Class responsible for handling creation and retirval of data
@@ -83,7 +84,16 @@ class MainController extends Controller
         // save the total
         $this->bookHelper->setNumberOfReadPages($total, $request->bookId);
 
+        // Usage example
+        $sentStatus = SMSFacade::sendSms('+123456789', 'Hello World!');
+
+        if($sentStatus){
+            $sentMsg = 'Information has been stored and sms sent to the user';
+        }else{
+            $sentMsg = 'Information has been stored. However failed to send sms to the user. Please try again!';
+        }
+
         // Redirect back or to a success page
-        return redirect()->route('kbr.index')->with('success', 'Information has been stored.');
+        return redirect()->route('kbr.index')->with('success', $sentMsg);
     }
 }
