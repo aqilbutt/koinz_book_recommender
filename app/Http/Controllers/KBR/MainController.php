@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\KBR;
 
-use App\Models\User;
-use App\Models\Books;
-use App\Models\UserBookReading;
 use App\Http\Controllers\Controller;
+use App\Helper\RecommendedBooksHelper\RecommendedBooksHelper;
+use App\Helper\BooksHelper\BooksHelper;
+use App\Helper\UserHelper\UserHelper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 /**
  * Class responsible for handling creation and retirval of data
@@ -15,6 +14,22 @@ use Illuminate\Support\Facades\Session;
  */
 class MainController extends Controller
 {
+    protected $rbaHelper;
+    protected $bookHelper;
+    protected $userHelper;
+
+    /**
+     * constructor
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function __construct()
+    {
+        $this->rbaHelper = new RecommendedBooksHelper();
+        $this->bookHelper = new BooksHelper();
+        $this->userHelper = new UserHelper();
+    }
+
     /**
      * Redirect to default route
      */
@@ -30,10 +45,10 @@ class MainController extends Controller
      * @return View
      */
     public function index(){
-        $userData = User::pluck('name', 'id');
-        $bookData = Books::pluck('book_name', 'id');
-        $topBooks = Books::pluck('book_name', 'id');
-        
+        $userData = $this->userHelper->pluckUserNames();
+        $bookData = $this->bookHelper->pluckBookNames();
+        $topBooks = $this->bookHelper->getTopRecommendedBooks();
+
         return view('main-view', compact('userData', 'bookData', 'topBooks'));
     }
 
@@ -45,25 +60,28 @@ class MainController extends Controller
             'start_page.*.required' => 'Please enter start page as integer value.',
             'end_page.*.required' => 'Please enter end page number.',
             'end_page.*.required' => 'Please enter end page as integer value.',
+            'end_page.*.gt' => 'End page should be greater than start page number.',
+            'end_page.*.min' => 'End Page value should be positive.',
+            'start_page.*.min' => 'Start Page value should be positive.',
         ];
 
         // Validate the form data
         $request->validate([
             'userId' => 'required',
             'bookId' => 'required',
-            'start_page.*' => 'required|numeric',
-            'end_page.*' => 'required|numeric',
+            'start_page.*' => 'required|numeric|min:0',
+            'end_page.*' => 'required|numeric|min:0|gt:start_page.*',
         ], $customMessages);
 
-        // Loop through the submitted intervals and store them
-        foreach ($request->start_page as $key => $startPage) {
-            $userBookReading = new UserBookReading();
-            $userBookReading->user_id = $request->userId;
-            $userBookReading->book_id = $request->bookId;
-            $userBookReading->start_page = $startPage;
-            $userBookReading->end_page = $request->end_page[$key];
-            $userBookReading->save();
-        }
+        //store the interval into DB
+        $this->rbaHelper->storeIntervals($request->userId, $request->bookId,
+            $request->start_page, $request->end_page);
+
+        // get total number of read lines
+        $total = $this->rbaHelper->calculateReadLinesPerBook($request->bookId);
+
+        // save the total
+        $this->bookHelper->setNumberOfReadPages($total, $request->bookId);
 
         // Redirect back or to a success page
         return redirect()->route('kbr.index')->with('success', 'Information has been stored.');
