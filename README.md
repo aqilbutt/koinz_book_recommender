@@ -24,10 +24,19 @@ DB_DATABASE=kbr
 DB_USERNAME=root
 DB_PASSWORD=123
 ```
+
+- Set the `SMS_PROVIDER` variable within the `.env` file to call the desired SMS provider:
+
+```bash
+SMS_PROVIDER=provider1
+OR 
+SMS_PROVIDER=provider2
+```
+
 - Run php `artisan migrate:fresh` from the root directory to create tables in the database:
 
 ```bash
-php artisan migrate:refresh
+php artisan migrate:fresh
 ```
 - Run the following artisan commands to set up seeders:
 
