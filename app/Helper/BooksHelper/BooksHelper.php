@@ -30,7 +30,8 @@ class BooksHelper
     public function getTopRecommendedBooks(){
         $topBooks = Books::orderBy('num_of_read_pages', 'desc')
             ->take(5)
-            ->pluck('book_name', 'id');
+            ->select('id', 'book_name', 'num_of_read_pages')
+            ->get();
         return $topBooks;
     }
 

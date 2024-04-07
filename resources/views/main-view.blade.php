@@ -70,8 +70,8 @@
         <div class='right-view'>
             <h1>Top 5 Recommended Books</h1>
             <ol>
-                @foreach($topBooks as $id => $book)
-                    <li>{{ $book }}</li>
+                @foreach($topBooks as $book)
+                    <li>{{ $book->book_name }} -> {{ $book->num_of_read_pages }} pages</li>
                 @endforeach
             </ol>
         </div>

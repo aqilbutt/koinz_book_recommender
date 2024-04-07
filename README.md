@@ -5,7 +5,7 @@ Below are the prerequisites and steps to run the project:
 
 ## Prerequisites
 
-- Download and install PHP on your system. Make sure it meets Laravel's minimum version requirements (PHP 7.2 or higher).
+- Download and install PHP on your system. Make sure it meets Laravel's minimum version requirements (PHP 7.3 or higher).
 -  Download and install Composer on your system. This will allow you to install Laravel and manage its dependencies.
 - Configure a Web Server, such as Apache 2.0, and MySQL minimum version 5.7.
 
