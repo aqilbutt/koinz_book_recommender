@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Books;
+
 
 class UserBookReading extends Model
 {
@@ -19,4 +22,14 @@ class UserBookReading extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function books()
+    {
+        return $this->belongsTo(Books::class, 'book_id', 'id');
+    }
 }
