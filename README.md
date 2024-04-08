@@ -44,4 +44,11 @@ php artisan migrate:fresh
 php artisan db:seed --class=UsersTableSeeder
 php artisan db:seed --class=BooksTableSeeder
 ```
+
+- Run the following artisan commands to execute unit test cases:
+
+```bash
+php artisan test
+```
+
 - Use the `php artisan serve` command to serve the application on your local machine. Copy the generated URL and open it in your browser.
